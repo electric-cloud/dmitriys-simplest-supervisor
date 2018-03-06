@@ -72,7 +72,8 @@ fn get_shell(path: &str) -> Option<String> {
     if let Some("#!") = shell.get(..2) {
         return Some(shell.get(2..).unwrap().to_string());
     }
-    return None;
+    // TODO: do it in more crossplatform way.
+    return Some(String::from("powershell"));
 }
 
 fn get_tree(path: &str) -> Vec<String> {
@@ -82,6 +83,14 @@ fn get_tree(path: &str) -> Vec<String> {
         let filepath = Path::new(p.as_str());
         if filepath.is_dir() {
             let runpath = filepath.join("run");
+            if runpath.exists() && !runpath.is_dir() {
+                retval.push(String::from(runpath.to_str().unwrap()));
+            }
+            let runpath = filepath.join("run.bat");
+            if runpath.exists() && !runpath.is_dir() {
+                retval.push(String::from(runpath.to_str().unwrap()));
+            }
+            let runpath = filepath.join("run.ps1");
             if runpath.exists() && !runpath.is_dir() {
                 retval.push(String::from(runpath.to_str().unwrap()));
             }
