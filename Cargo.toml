@@ -1,0 +1,6 @@
+[package]
+name = "dss"
+version = "0.1.0"
+authors = ["Dmitriy Shamatrin <justnoxx@gmail.com>"]
+
+[dependencies]
